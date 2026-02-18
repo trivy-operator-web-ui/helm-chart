@@ -1,0 +1,11 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "trivy-operator-web-ui-operator.name" . }}
+roleRef:
+  kind: ClusterRole
+  name: {{ include "trivy-operator-web-ui-operator.name" . }}
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: {{ include "trivy-operator-web-ui-operator.name" . }}
