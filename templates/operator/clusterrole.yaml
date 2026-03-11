@@ -3,6 +3,6 @@ kind: ClusterRole
 metadata:
   name: {{ include "trivy-operator-web-ui-operator.name" . }}
 rules:
-- apiGroups: ["aquasecurity.github.io"]
-  resources: ["vulnerabilityreports", "sbomreports"]
-  verbs: ["get", "watch", "list"]
+  - apiGroups: ["aquasecurity.github.io"]
+    resources: ["vulnerabilityreports", "sbomreports"]
+    verbs: ["get", "watch", "list"]

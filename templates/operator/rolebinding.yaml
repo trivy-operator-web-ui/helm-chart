@@ -9,3 +9,4 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: {{ include "trivy-operator-web-ui-operator.name" . }}
+  namespace: {{ .Release.Namespace }}

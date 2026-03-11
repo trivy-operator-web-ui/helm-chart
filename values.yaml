@@ -1,6 +1,6 @@
 operator:
   image:
-    repository: nginx
+    repository: ""
     pullPolicy: IfNotPresent
     tag: ""
 
@@ -13,8 +13,15 @@ operator:
   resources:
     requests:
       cpu: 10m
-    limit:
+    limits:
       memory: 100Mi
+
+  portal:
+    username: ""
+    password: ""
+
+  log:
+    level: "error"
 
   ingress:
     enabled: false
@@ -34,12 +41,12 @@ operator:
 
   livenessProbe:
     httpGet:
-      path: /
+      path: /api/health
       port: http
-    readinessProbe:
-      httpGet:
-        path: /
-        port: http
+  readinessProbe:
+    httpGet:
+      path: /api/health
+      port: http
   
   nodeSelector: {}
   tolerations: []
@@ -55,7 +62,7 @@ operator:
       - ALL
     readOnlyRootFilesystem: true
     runAsNonRoot: true
-    runAsUser: 1000
+    runAsUser: 3000
 
   service:
     type: ClusterIP
@@ -66,7 +73,7 @@ frontend:
   image:
     repository: nginx
     pullPolicy: IfNotPresent
-    tag: ""
+    tag: "1.29-alpine-slim"
 
   replicaCount: 1
 
@@ -77,7 +84,7 @@ frontend:
   resources:
     requests:
       cpu: 10m
-    limit:
+    limits:
       memory: 100Mi
 
   ingress:
@@ -98,10 +105,10 @@ frontend:
     httpGet:
       path: /
       port: http
-    readinessProbe:
-      httpGet:
-        path: /
-        port: http
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
 
   nodeSelector: {}
   tolerations: []
@@ -111,19 +118,9 @@ frontend:
   podLabels: {}
   podSecurityContext: {}
 
-  securityContext:
-    capabilities:
-      drop:
-      - ALL
-    readOnlyRootFilesystem: true
-    runAsNonRoot: true
-    runAsUser: 1000
-
   service:
     type: ClusterIP
     port: 8080
-
-
 
 httpRoute:
   # HTTPRoute enabled.

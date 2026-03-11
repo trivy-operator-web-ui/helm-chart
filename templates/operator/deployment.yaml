@@ -52,6 +52,11 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          envFrom:
+            - secretRef:
+                name: {{ include "trivy-operator-web-ui-operator.name" . }}-env
+            - configMapRef:
+                name: {{ include "trivy-operator-web-ui-operator.name" . }}-env
       {{- with .Values.operator.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
