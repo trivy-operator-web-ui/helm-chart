@@ -1,0 +1,27 @@
+name: 🧪 Lint and Tests
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Lint-and-Tests:
+    name: 🧪 Lint and Tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔽 Checkout repository code
+        uses: actions/checkout@v6
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: 🛠️ Install Helm
+        uses: azure/setup-helm@v4.3.0
+
+      - name: 🛠️ Install Helm Unittest
+        run: |
+          helm plugin install --verify=false https://github.com/helm-unittest/helm-unittest.git
+
+      - name: 🧪 Lint and Tests
+        run: |
+          helm unittest .

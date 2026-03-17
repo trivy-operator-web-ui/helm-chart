@@ -1,0 +1,376 @@
+manifest should match snapshot:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui-frontend
+        helm.sh/chart: trivy-operator-web-ui-0.1.0
+      name: trivy-operator-web-ui-frontend
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: frontend
+          app.kubernetes.io/instance: RELEASE-NAME
+          app.kubernetes.io/name: trivy-operator-web-ui-frontend
+      template:
+        metadata:
+          annotations:
+            annotations.pod.operator: "true"
+          labels:
+            app.kubernetes.io/component: frontend
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: trivy-operator-web-ui-frontend
+            helm.sh/chart: trivy-operator-web-ui-0.1.0
+            labels.pod.operator: "true"
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: topology.kubernetes.io/frontend
+                        operator: In
+                        values:
+                          - frontend-east1
+                          - frontend-west1
+          containers:
+            - image: ghcr.io/trivy-operator-web-ui/frontend:1.0.0
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                httpGet:
+                  path: /
+                  port: http
+              name: trivy-operator-web-ui-operator
+              ports:
+                - containerPort: 8080
+                  name: http
+                  protocol: TCP
+              readinessProbe:
+                httpGet:
+                  path: /
+                  port: http
+              resources:
+                limits:
+                  memory: 100Mi
+                requests:
+                  cpu: 10m
+          nodeSelector:
+            disktype: ssdFrontend
+          serviceAccountName: trivy-operator-web-ui-frontend
+          tolerations:
+            - effect: NoExecute
+              key: node.kubernetes.io/frontend
+              operator: Exists
+              tolerationSeconds: 6000
+  2: |
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      annotations:
+        kubernetes.io/tls-acme: "true"
+      labels:
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui-frontend
+        helm.sh/chart: trivy-operator-web-ui-0.1.0
+      name: trivy-operator-web-ui-frontend
+    spec:
+      ingressClassName: frontendclassname
+      rules:
+        - host: frontend-1.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: trivy-operator-web-ui-frontend
+                    port:
+                      number: 8080
+                path: /
+                pathType: ImplementationSpecific
+        - host: frontend-2.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: trivy-operator-web-ui-frontend
+                    port:
+                      number: 8080
+                path: /
+                pathType: ImplementationSpecific
+        - host: frontend-3.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: trivy-operator-web-ui-frontend
+                    port:
+                      number: 8080
+                path: /
+                pathType: ImplementationSpecific
+      tls:
+        - hosts:
+            - frontend-1.com
+            - frontend-2.com
+          secretName: frontend-1-2
+        - hosts:
+            - frontend-3.com
+          secretName: frontend-3
+  3: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui-frontend
+        helm.sh/chart: trivy-operator-web-ui-0.1.0
+      name: trivy-operator-web-ui-frontend
+    spec:
+      ports:
+        - name: http
+          port: 8080
+          protocol: TCP
+          targetPort: http
+      selector:
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/name: trivy-operator-web-ui-frontend
+      type: ClusterIP
+  4: |
+    apiVersion: v1
+    automountServiceAccountToken: true
+    kind: ServiceAccount
+    metadata:
+      annotations:
+        annotations.serviceaccount.frontend: "true"
+      labels:
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui-frontend
+        helm.sh/chart: trivy-operator-web-ui-0.1.0
+      name: trivy-operator-web-ui-frontend
+  5: |
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRole
+    metadata:
+      name: trivy-operator-web-ui-operator
+    rules:
+      - apiGroups:
+          - aquasecurity.github.io
+        resources:
+          - vulnerabilityreports
+          - sbomreports
+        verbs:
+          - get
+          - watch
+          - list
+  6: |
+    apiVersion: v1
+    data:
+      RUST_LOG: error
+    kind: ConfigMap
+    metadata:
+      name: trivy-operator-web-ui-operator-env
+  7: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui-operator
+        helm.sh/chart: trivy-operator-web-ui-0.1.0
+      name: trivy-operator-web-ui-operator
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app.kubernetes.io/component: operator
+          app.kubernetes.io/instance: RELEASE-NAME
+          app.kubernetes.io/name: trivy-operator-web-ui-operator
+      template:
+        metadata:
+          annotations:
+            annotations.pod.operator: "true"
+            checksum/config: 410bbfd58acbf1c15517ccd8b9978907cf97026fdbeea9d14dc80dd880f22fd3
+            checksum/secret: 85261964a59152c1612cb547acf94d6d8876cefd3e9d2c7a483bfde97eb6ddab
+          labels:
+            app.kubernetes.io/component: operator
+            app.kubernetes.io/instance: RELEASE-NAME
+            app.kubernetes.io/managed-by: Helm
+            app.kubernetes.io/name: trivy-operator-web-ui-operator
+            helm.sh/chart: trivy-operator-web-ui-0.1.0
+            labels.pod.operator: "true"
+        spec:
+          affinity:
+            nodeAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                nodeSelectorTerms:
+                  - matchExpressions:
+                      - key: topology.kubernetes.io/operator
+                        operator: In
+                        values:
+                          - operator-east1
+                          - operator-west1
+          containers:
+            - envFrom:
+                - secretRef:
+                    name: trivy-operator-web-ui-operator-env
+                - configMapRef:
+                    name: trivy-operator-web-ui-operator-env
+              image: ghcr.io/trivy-operator-web-ui/operator:1.0.0
+              imagePullPolicy: IfNotPresent
+              livenessProbe:
+                httpGet:
+                  path: /api/health
+                  port: http
+              name: trivy-operator-web-ui-operator
+              ports:
+                - containerPort: 8080
+                  name: http
+                  protocol: TCP
+              readinessProbe:
+                httpGet:
+                  path: /api/health
+                  port: http
+              resources:
+                limits:
+                  memory: 100Mi
+                requests:
+                  cpu: 10m
+              securityContext:
+                capabilities:
+                  drop:
+                    - ALL
+                readOnlyRootFilesystem: true
+                runAsNonRoot: true
+                runAsUser: 3000
+          nodeSelector:
+            disktype: ssdOperator
+          serviceAccountName: trivy-operator-web-ui-operator
+          tolerations:
+            - effect: NoExecute
+              key: node.kubernetes.io/operator
+              operator: Exists
+              tolerationSeconds: 6000
+  8: |
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
+    metadata:
+      annotations:
+        kubernetes.io/tls-acme: "true"
+      labels:
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui-operator
+        helm.sh/chart: trivy-operator-web-ui-0.1.0
+      name: trivy-operator-web-ui-operator
+    spec:
+      ingressClassName: operatorclassname
+      rules:
+        - host: opreator-1.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: trivy-operator-web-ui-operator
+                    port:
+                      number: 8080
+                path: /api
+                pathType: ImplementationSpecific
+        - host: operator-2.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: trivy-operator-web-ui-operator
+                    port:
+                      number: 8080
+                path: /api
+                pathType: ImplementationSpecific
+        - host: operator-3.com
+          http:
+            paths:
+              - backend:
+                  service:
+                    name: trivy-operator-web-ui-operator
+                    port:
+                      number: 8080
+                path: /api
+                pathType: ImplementationSpecific
+      tls:
+        - hosts:
+            - opreator-1.com
+            - operator-2.com
+          secretName: opreator-1-2
+        - hosts:
+            - operator-3.com
+          secretName: operator-3
+  9: |
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: trivy-operator-web-ui-operator
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: trivy-operator-web-ui-operator
+    subjects:
+      - kind: ServiceAccount
+        name: trivy-operator-web-ui-operator
+        namespace: NAMESPACE
+  10: |
+    apiVersion: v1
+    data:
+      PORTAL_PASSWORD: cGFzc3dvcmQ=
+      PORTAL_USERNAME: dXNlcm5hbWU=
+    kind: Secret
+    metadata:
+      name: trivy-operator-web-ui-operator-env
+  11: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      labels:
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui-operator
+        helm.sh/chart: trivy-operator-web-ui-0.1.0
+      name: trivy-operator-web-ui-operator
+    spec:
+      ports:
+        - name: http
+          port: 8080
+          protocol: TCP
+          targetPort: http
+      selector:
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/name: trivy-operator-web-ui-operator
+      type: ClusterIP
+  12: |
+    apiVersion: v1
+    automountServiceAccountToken: true
+    kind: ServiceAccount
+    metadata:
+      annotations:
+        annotations.serviceaccount.operator: "true"
+      labels:
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui-operator
+        helm.sh/chart: trivy-operator-web-ui-0.1.0
+      name: trivy-operator-web-ui-operator

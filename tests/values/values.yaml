@@ -1,0 +1,198 @@
+operator:
+  image:
+    repository: "ghcr.io/trivy-operator-web-ui/operator"
+    pullPolicy: IfNotPresent
+    tag: "1.0.0"
+
+  serviceAccount:
+    automount: true
+    annotations:
+      annotations.serviceaccount.operator: "true"
+
+  resources:
+    requests:
+      cpu: 10m
+    limits:
+      memory: 100Mi
+
+  portal:
+    username: "username"
+    password: "password"
+
+  log:
+    level: "error"
+
+  ingress:
+    enabled: true
+    className: "operatorclassname"
+    annotations:
+      kubernetes.io/tls-acme: "true"
+    hosts:
+      - opreator-1.com
+      - operator-2.com
+      - operator-3.com
+    tls:
+      - secretName: opreator-1-2
+        hosts:
+          - opreator-1.com
+          - operator-2.com
+      - secretName: operator-3
+        hosts:
+          - operator-3.com
+
+  livenessProbe:
+    httpGet:
+      path: /api/health
+      port: http
+  readinessProbe:
+    httpGet:
+      path: /api/health
+      port: http
+  
+  nodeSelector:
+    disktype: ssdOperator
+  
+  tolerations:
+    - key: "node.kubernetes.io/operator"
+      operator: "Exists"
+      effect: "NoExecute"
+      tolerationSeconds: 6000
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: topology.kubernetes.io/operator
+            operator: In
+            values:
+            - operator-east1
+            - operator-west1
+
+  podAnnotations:
+    annotations.pod.operator: "true"
+  podLabels:
+    labels.pod.operator: "true"
+  
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 3000
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+
+frontend:
+  image:
+    repository: "ghcr.io/trivy-operator-web-ui/frontend"
+    pullPolicy: IfNotPresent
+    tag: "1.0.0"
+
+  replicaCount: 1
+
+  serviceAccount:
+    automount: true
+    annotations:
+      annotations.serviceaccount.frontend: "true"
+
+  resources:
+    requests:
+      cpu: 10m
+    limits:
+      memory: 100Mi
+
+  ingress:
+    enabled: true
+    className: "frontendclassname"
+    annotations:
+      kubernetes.io/tls-acme: "true"
+    hosts:
+      - frontend-1.com
+      - frontend-2.com
+      - frontend-3.com
+    tls:
+      - secretName: frontend-1-2
+        hosts:
+          - frontend-1.com
+          - frontend-2.com
+      - secretName: frontend-3
+        hosts:
+          - frontend-3.com
+
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+
+  nodeSelector:
+    disktype: ssdFrontend
+  
+  tolerations:
+    - key: "node.kubernetes.io/frontend"
+      operator: "Exists"
+      effect: "NoExecute"
+      tolerationSeconds: 6000
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: topology.kubernetes.io/frontend
+            operator: In
+            values:
+            - frontend-east1
+            - frontend-west1
+
+  podAnnotations:
+    annotations.pod.operator: "true"
+  podLabels:
+    labels.pod.operator: "true"
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+httpRoute:
+  # HTTPRoute enabled.
+  enabled: false
+  # HTTPRoute annotations.
+  annotations: {}
+  # Which Gateways this Route is attached to.
+  parentRefs:
+  - name: gateway
+    sectionName: http
+    # namespace: default
+  # Hostnames matching HTTP header.
+  hostnames:
+  - chart-example.local
+  # List of rules and filters applied.
+  rules:
+  - matches:
+    - path:
+        type: PathPrefix
+        value: /headers
+  #   filters:
+  #   - type: RequestHeaderModifier
+  #     requestHeaderModifier:
+  #       set:
+  #       - name: My-Overwrite-Header
+  #         value: this-is-the-only-value
+  #       remove:
+  #       - User-Agent
+  # - matches:
+  #   - path:
+  #       type: PathPrefix
+  #       value: /echo
+  #     headers:
+  #     - name: version
+  #       value: v2

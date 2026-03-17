@@ -1,0 +1,36 @@
+name: 🧪 Apply tests
+
+on: 
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  Apply-Tests:
+    name: 🧪 Apply tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔽 Checkout repository code
+        uses: actions/checkout@v6
+
+      - name: 🛠️ Install Helm
+        uses: azure/setup-helm@v4.3.0
+
+      - name: 🛠️ Install Kwok
+        uses: kubernetes-sigs/kwok@main
+        with:
+          KWOK_VERSION: ${{ env.KWOK_VERSION}}
+          command: kwokctl
+
+      - name: 🛠️ Setup Kwok cluster
+        run: |
+          kwokctl create cluster --name=kwok
+
+      - name: 🧪 Setup Kwok cluster
+        run: |
+          helm install \
+            -f tests/values/values.yaml \
+            --namespace trivy-operator-web-ui \
+            --create-namespace \
+            trivy-operator-web-ui \
+            .
