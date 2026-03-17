@@ -1,4 +1,6 @@
 suite: chart test
+chart:
+  version: x.y.z
 tests:
   - it: manifest should match snapshot
     values:

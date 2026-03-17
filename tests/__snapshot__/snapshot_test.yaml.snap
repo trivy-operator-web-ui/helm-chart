@@ -7,8 +7,9 @@ manifest should match snapshot:
         app.kubernetes.io/component: frontend
         app.kubernetes.io/instance: RELEASE-NAME
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: trivy-operator-web-ui-frontend
-        helm.sh/chart: trivy-operator-web-ui-0.1.0
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: 1.0.0-frontend
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-frontend
     spec:
       replicas: 1
@@ -16,7 +17,8 @@ manifest should match snapshot:
         matchLabels:
           app.kubernetes.io/component: frontend
           app.kubernetes.io/instance: RELEASE-NAME
-          app.kubernetes.io/name: trivy-operator-web-ui-frontend
+          app.kubernetes.io/name: trivy-operator-web-ui
+          app.kubernetes.io/version: 1.0.0-frontend
       template:
         metadata:
           annotations:
@@ -25,8 +27,9 @@ manifest should match snapshot:
             app.kubernetes.io/component: frontend
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: trivy-operator-web-ui-frontend
-            helm.sh/chart: trivy-operator-web-ui-0.1.0
+            app.kubernetes.io/name: trivy-operator-web-ui
+            app.kubernetes.io/version: 1.0.0-frontend
+            helm.sh/chart: trivy-operator-web-ui
             labels.pod.operator: "true"
         spec:
           affinity:
@@ -40,7 +43,7 @@ manifest should match snapshot:
                           - frontend-east1
                           - frontend-west1
           containers:
-            - image: ghcr.io/trivy-operator-web-ui/frontend:1.0.0
+            - image: ghcr.io/trivy-operator-web-ui/frontend:1.0.0-frontend
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -78,8 +81,9 @@ manifest should match snapshot:
         app.kubernetes.io/component: frontend
         app.kubernetes.io/instance: RELEASE-NAME
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: trivy-operator-web-ui-frontend
-        helm.sh/chart: trivy-operator-web-ui-0.1.0
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: 1.0.0-frontend
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-frontend
     spec:
       ingressClassName: frontendclassname
@@ -130,8 +134,9 @@ manifest should match snapshot:
         app.kubernetes.io/component: frontend
         app.kubernetes.io/instance: RELEASE-NAME
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: trivy-operator-web-ui-frontend
-        helm.sh/chart: trivy-operator-web-ui-0.1.0
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: 1.0.0-frontend
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-frontend
     spec:
       ports:
@@ -142,7 +147,8 @@ manifest should match snapshot:
       selector:
         app.kubernetes.io/component: frontend
         app.kubernetes.io/instance: RELEASE-NAME
-        app.kubernetes.io/name: trivy-operator-web-ui-frontend
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: 1.0.0-frontend
       type: ClusterIP
   4: |
     apiVersion: v1
@@ -155,8 +161,9 @@ manifest should match snapshot:
         app.kubernetes.io/component: frontend
         app.kubernetes.io/instance: RELEASE-NAME
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: trivy-operator-web-ui-frontend
-        helm.sh/chart: trivy-operator-web-ui-0.1.0
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: 1.0.0-frontend
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-frontend
   5: |
     apiVersion: rbac.authorization.k8s.io/v1
@@ -188,8 +195,9 @@ manifest should match snapshot:
         app.kubernetes.io/component: operator
         app.kubernetes.io/instance: RELEASE-NAME
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: trivy-operator-web-ui-operator
-        helm.sh/chart: trivy-operator-web-ui-0.1.0
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: 1.0.0-operator
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-operator
     spec:
       replicas: 1
@@ -197,7 +205,8 @@ manifest should match snapshot:
         matchLabels:
           app.kubernetes.io/component: operator
           app.kubernetes.io/instance: RELEASE-NAME
-          app.kubernetes.io/name: trivy-operator-web-ui-operator
+          app.kubernetes.io/name: trivy-operator-web-ui
+          app.kubernetes.io/version: 1.0.0-operator
       template:
         metadata:
           annotations:
@@ -208,8 +217,9 @@ manifest should match snapshot:
             app.kubernetes.io/component: operator
             app.kubernetes.io/instance: RELEASE-NAME
             app.kubernetes.io/managed-by: Helm
-            app.kubernetes.io/name: trivy-operator-web-ui-operator
-            helm.sh/chart: trivy-operator-web-ui-0.1.0
+            app.kubernetes.io/name: trivy-operator-web-ui
+            app.kubernetes.io/version: 1.0.0-operator
+            helm.sh/chart: trivy-operator-web-ui
             labels.pod.operator: "true"
         spec:
           affinity:
@@ -228,7 +238,7 @@ manifest should match snapshot:
                     name: trivy-operator-web-ui-operator-env
                 - configMapRef:
                     name: trivy-operator-web-ui-operator-env
-              image: ghcr.io/trivy-operator-web-ui/operator:1.0.0
+              image: ghcr.io/trivy-operator-web-ui/operator:1.0.0-operator
               imagePullPolicy: IfNotPresent
               livenessProbe:
                 httpGet:
@@ -273,8 +283,9 @@ manifest should match snapshot:
         app.kubernetes.io/component: operator
         app.kubernetes.io/instance: RELEASE-NAME
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: trivy-operator-web-ui-operator
-        helm.sh/chart: trivy-operator-web-ui-0.1.0
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: 1.0.0-operator
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-operator
     spec:
       ingressClassName: operatorclassname
@@ -346,8 +357,9 @@ manifest should match snapshot:
         app.kubernetes.io/component: operator
         app.kubernetes.io/instance: RELEASE-NAME
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: trivy-operator-web-ui-operator
-        helm.sh/chart: trivy-operator-web-ui-0.1.0
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: 1.0.0-operator
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-operator
     spec:
       ports:
@@ -358,7 +370,8 @@ manifest should match snapshot:
       selector:
         app.kubernetes.io/component: operator
         app.kubernetes.io/instance: RELEASE-NAME
-        app.kubernetes.io/name: trivy-operator-web-ui-operator
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: 1.0.0-operator
       type: ClusterIP
   12: |
     apiVersion: v1
@@ -371,6 +384,7 @@ manifest should match snapshot:
         app.kubernetes.io/component: operator
         app.kubernetes.io/instance: RELEASE-NAME
         app.kubernetes.io/managed-by: Helm
-        app.kubernetes.io/name: trivy-operator-web-ui-operator
-        helm.sh/chart: trivy-operator-web-ui-0.1.0
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: 1.0.0-operator
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-operator

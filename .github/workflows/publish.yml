@@ -15,7 +15,15 @@ jobs:
         with:
           fetch-depth: 0
           token: ${{ secrets.GH_PAT }}
-      
+
+      - name: 🤖 Configure bot user
+        run: |
+          git config user.name "github-actions[bot]"
+          git config --global user.name "github-actions[bot]"
+
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
       - name: 🛠️ Set up Docker
         uses: docker/setup-docker-action@v5
 
@@ -38,15 +46,13 @@ jobs:
       - name: 🛠️ Install Helm
         uses: azure/setup-helm@v4.3.0
 
-      - name: 🛠️ Install Helm Unittest
+      - name: 🛠️ Install Cocogitto
         run: |
-          helm plugin install --verify=false https://github.com/helm-unittest/helm-unittest.git
+          wget https://github.com/cocogitto/cocogitto/releases/download/7.0.0/cocogitto-7.0.0-x86_64-unknown-linux-musl.tar.gz
+          tar -xf cocogitto-7.0.0-x86_64-unknown-linux-musl.tar.gz
+          sudo mv x86_64-unknown-linux-musl/cog /usr/bin
+          rm -r cocogitto-7.0.0-x86_64-unknown-linux-musl.tar.gz x86_64-unknown-linux-musl
 
-      - name: 📦 Release
-        uses: cocogitto/cocogitto-action@v4
-        id: release
-        with:
-          command: bump
-          args: --auto
-          git-user: "github-actions[bot]"
-          git-user-email: "41898282+github-actions[bot]@users.noreply.github.com"
+      - name: 📦 Release and Publish
+        run: |
+          cog bump --auto --skip-ci
