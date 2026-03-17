@@ -1,0 +1,22 @@
+pre_bump_hooks = [
+    "yq '.version |= \"{{version}}\"' Chart.yaml > Chart.tmp.yaml && mv Chart.tmp.yaml Chart.yaml",
+    "helm unittest -u .",
+    "git add Chart.yaml",
+    "git commit --amend --no-edit"
+]
+
+post_bump_hooks = [
+    "git push --tags origin main",
+    "helm package .",
+    "helm push trivy-operator-web-ui-{{version}}.tgz oci://ghcr.io/trivy-operator-web-ui/"
+]
+
+[changelog]
+path = "CHANGELOG.md"
+template = "remote"
+remote = "github.com"
+repository = "helm-chart"
+owner = "trivy-operator-web-ui"
+authors = [
+  { username = "ABWassim", signature = "Wassim Ahmed-Belkacem"}
+]

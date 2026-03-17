@@ -22,12 +22,8 @@ spec:
         {{- end }}
     spec:
       serviceAccountName: {{ include "trivy-operator-web-ui-frontend.name" . }}
-      {{- with .Values.frontend.podSecurityContext }}
-      securityContext:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
       containers:
-        - name: {{ .Chart.Name }}
+        - name: {{ include "trivy-operator-web-ui-operator.name" . }}
           {{- with .Values.frontend.securityContext }}
           securityContext:
             {{- toYaml . | nindent 12 }}

@@ -25,19 +25,15 @@ spec:
   {{- end }}
   rules:
     {{- range .Values.operator.ingress.hosts }}
-    - host: {{ .host | quote }}
+    - host: {{ . | quote }}
       http:
         paths:
-          {{- range .paths }}
-          - path: {{ .path }}
-            {{- with .pathType }}
-            pathType: {{ . }}
-            {{- end }}
+          - path: /api
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: {{ include "trivy-operator-web-ui-operator.name" $ }}
                 port:
                   number: {{ $.Values.operator.service.port }}
-          {{- end }}
     {{- end }}
 {{- end }}
