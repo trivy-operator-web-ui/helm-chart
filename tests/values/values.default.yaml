@@ -1,3 +1,27 @@
+common:
+  ingress:
+    enabled: true
+    className: "classname"
+    annotations:
+      kubernetes.io/tls-acme: "true"
+    hosts:
+      - host-1.com
+      - host-2.com
+    tls:
+      - secretName: host-1
+        hosts:
+          - host-1.com
+  
+  httpRoute:
+    enabled: true
+    annotations: {}
+    parentRefs:
+    - name: gateway
+      sectionName: http
+    hostnames:
+      - host-1.com
+      - host-2.com
+
 operator:
   image:
     repository: "ghcr.io/trivy-operator-web-ui/operator"
@@ -21,24 +45,6 @@ operator:
 
   log:
     level: "error"
-
-  ingress:
-    enabled: true
-    className: "operatorclassname"
-    annotations:
-      kubernetes.io/tls-acme: "true"
-    hosts:
-      - opreator-1.com
-      - operator-2.com
-      - operator-3.com
-    tls:
-      - secretName: opreator-1-2
-        hosts:
-          - opreator-1.com
-          - operator-2.com
-      - secretName: operator-3
-        hosts:
-          - operator-3.com
 
   livenessProbe:
     httpGet:
@@ -86,6 +92,17 @@ operator:
     type: ClusterIP
     port: 8080
 
+  url: ""
+
+  httpRoute:
+    filters:
+      - type: RequestHeaderModifier
+        requestHeaderModifier:
+          set:
+          - name: My-Overwrite-Header-Operator
+            value: this-is-the-only-value-operator
+          remove:
+          - User-Agent
 
 frontend:
   image:
@@ -105,24 +122,6 @@ frontend:
       cpu: 10m
     limits:
       memory: 100Mi
-
-  ingress:
-    enabled: true
-    className: "frontendclassname"
-    annotations:
-      kubernetes.io/tls-acme: "true"
-    hosts:
-      - frontend-1.com
-      - frontend-2.com
-      - frontend-3.com
-    tls:
-      - secretName: frontend-1-2
-        hosts:
-          - frontend-1.com
-          - frontend-2.com
-      - secretName: frontend-3
-        hosts:
-          - frontend-3.com
 
   livenessProbe:
     httpGet:
@@ -162,37 +161,12 @@ frontend:
     type: ClusterIP
     port: 8080
 
-httpRoute:
-  # HTTPRoute enabled.
-  enabled: false
-  # HTTPRoute annotations.
-  annotations: {}
-  # Which Gateways this Route is attached to.
-  parentRefs:
-  - name: gateway
-    sectionName: http
-    # namespace: default
-  # Hostnames matching HTTP header.
-  hostnames:
-  - chart-example.local
-  # List of rules and filters applied.
-  rules:
-  - matches:
-    - path:
-        type: PathPrefix
-        value: /headers
-  #   filters:
-  #   - type: RequestHeaderModifier
-  #     requestHeaderModifier:
-  #       set:
-  #       - name: My-Overwrite-Header
-  #         value: this-is-the-only-value
-  #       remove:
-  #       - User-Agent
-  # - matches:
-  #   - path:
-  #       type: PathPrefix
-  #       value: /echo
-  #     headers:
-  #     - name: version
-  #       value: v2
+  httpRoute:
+    filters:
+      - type: RequestHeaderModifier
+        requestHeaderModifier:
+          set:
+          - name: My-Overwrite-Header-Frontend
+            value: this-is-the-only-value-frontend
+          remove:
+          - User-Agent
