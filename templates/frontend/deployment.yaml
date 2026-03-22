@@ -46,6 +46,12 @@ spec:
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- if and (not .Values.common.ingress.enabled) (not .Values.common.httpRoute.enabled) }}
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/share/nginx/html/assets/config.json
+              subPath: config.json
+          {{- end }}
       {{- with .Values.frontend.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -57,4 +63,10 @@ spec:
       {{- with .Values.frontend.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if and (not .Values.common.ingress.enabled) (not .Values.common.httpRoute.enabled) }}
+      volumes:
+        - name: config-volume
+          configMap:
+            name: {{ include "trivy-operator-web-ui-frontend.name" . }}
       {{- end }}
