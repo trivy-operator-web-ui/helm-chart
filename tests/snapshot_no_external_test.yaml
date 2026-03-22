@@ -1,0 +1,9 @@
+suite: chart test
+chart:
+  version: x.y.z
+tests:
+  - it: should create configmap and volume inside frontend
+    values:
+      - ./values/values.no-external.yaml
+    asserts:
+      - matchSnapshot: {}

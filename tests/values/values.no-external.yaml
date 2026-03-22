@@ -1,0 +1,135 @@
+common:
+  ingress:
+    enabled: false
+  
+  httpRoute:
+    enabled: false
+
+operator:
+  image:
+    repository: "ghcr.io/trivy-operator-web-ui/operator"
+    pullPolicy: IfNotPresent
+    tag: "1.0.0-operator"
+
+  serviceAccount:
+    automount: true
+    annotations:
+      annotations.serviceaccount.operator: "true"
+
+  resources:
+    requests:
+      cpu: 10m
+    limits:
+      memory: 100Mi
+
+  portal:
+    username: "username"
+    password: "password"
+
+  log:
+    level: "error"
+
+  livenessProbe:
+    httpGet:
+      path: /api/health
+      port: http
+  readinessProbe:
+    httpGet:
+      path: /api/health
+      port: http
+  
+  nodeSelector:
+    disktype: ssdOperator
+  
+  tolerations:
+    - key: "node.kubernetes.io/operator"
+      operator: "Exists"
+      effect: "NoExecute"
+      tolerationSeconds: 6000
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: topology.kubernetes.io/operator
+            operator: In
+            values:
+            - operator-east1
+            - operator-west1
+
+  podAnnotations:
+    annotations.pod.operator: "true"
+  podLabels:
+    labels.pod.operator: "true"
+  
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    readOnlyRootFilesystem: true
+    runAsNonRoot: true
+    runAsUser: 3000
+
+  service:
+    type: ClusterIP
+    port: 8080
+
+  url: "http://operator-node-port:30123"
+
+frontend:
+  image:
+    repository: "ghcr.io/trivy-operator-web-ui/frontend"
+    pullPolicy: IfNotPresent
+    tag: "1.0.0-frontend"
+
+  replicaCount: 1
+
+  serviceAccount:
+    automount: true
+    annotations:
+      annotations.serviceaccount.frontend: "true"
+
+  resources:
+    requests:
+      cpu: 10m
+    limits:
+      memory: 100Mi
+
+  livenessProbe:
+    httpGet:
+      path: /
+      port: http
+  readinessProbe:
+    httpGet:
+      path: /
+      port: http
+
+  nodeSelector:
+    disktype: ssdFrontend
+  
+  tolerations:
+    - key: "node.kubernetes.io/frontend"
+      operator: "Exists"
+      effect: "NoExecute"
+      tolerationSeconds: 6000
+
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: topology.kubernetes.io/frontend
+            operator: In
+            values:
+            - frontend-east1
+            - frontend-west1
+
+  podAnnotations:
+    annotations.pod.operator: "true"
+  podLabels:
+    labels.pod.operator: "true"
+
+  service:
+    type: ClusterIP
+    port: 8080

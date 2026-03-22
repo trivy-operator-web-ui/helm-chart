@@ -4,6 +4,6 @@ chart:
 tests:
   - it: manifest should match snapshot
     values:
-      - ./values/values.yaml
+      - ./values/values.default.yaml
     asserts:
       - matchSnapshot: {}
