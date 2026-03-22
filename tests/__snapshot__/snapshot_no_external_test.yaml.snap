@@ -73,6 +73,10 @@ should create configmap and volume inside frontend:
                   memory: 100Mi
                 requests:
                   cpu: 10m
+              volumeMounts:
+                - mountPath: /usr/share/nginx/html/assets/config.json
+                  name: config-volume
+                  subPath: config.json
           nodeSelector:
             disktype: ssdFrontend
           serviceAccountName: trivy-operator-web-ui-frontend
@@ -81,6 +85,10 @@ should create configmap and volume inside frontend:
               key: node.kubernetes.io/frontend
               operator: Exists
               tolerationSeconds: 6000
+          volumes:
+            - configMap:
+                name: trivy-operator-web-ui-frontend
+              name: config-volume
   3: |
     apiVersion: v1
     kind: Service
