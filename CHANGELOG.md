@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.2.0](https://github.com/trivy-operator-web-ui/helm-chart/compare/0dcf960ae77114fed6a9ddabda57384f31439d57..0.2.0) - 2026-03-23
+#### Features
+- support for httproute, ingress and nodeport - ([0dcf960](https://github.com/trivy-operator-web-ui/helm-chart/commit/0dcf960ae77114fed6a9ddabda57384f31439d57)) - ABWassim
+#### Bug Fixes
+- (**frontend**) volume for configmap - ([3a0dbf3](https://github.com/trivy-operator-web-ui/helm-chart/commit/3a0dbf31895105d55e3f7c930902c66b8c899058)) - ABWassim
+#### Tests
+- update - ([63fca30](https://github.com/trivy-operator-web-ui/helm-chart/commit/63fca305461c35947a9b34c62a1808010374de57)) - ABWassim
+#### Miscellaneous Chores
+- change path for helm package - ([2dd60fa](https://github.com/trivy-operator-web-ui/helm-chart/commit/2dd60fa81a427053f910abaf3a1b71d679f7213a)) - ABWassim
+- yaml extension - ([5437a12](https://github.com/trivy-operator-web-ui/helm-chart/commit/5437a12316da57c3adfd5dce57af3eab1f470b14)) - ABWassim
+
+- - -
+
 ## [0.1.0](https://github.com/trivy-operator-web-ui/helm-chart/compare/bff1a23fe21761df9510b69dd340d15b5a2a7300..0.1.0) - 2026-03-17
 #### Features
 - create chart - ([b654523](https://github.com/trivy-operator-web-ui/helm-chart/commit/b654523e665d783b4ecc47a914fa416b74ef758e)) - ABWassim
