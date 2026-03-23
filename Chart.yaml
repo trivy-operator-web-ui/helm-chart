@@ -2,4 +2,4 @@ apiVersion: v2
 name: trivy-operator-web-ui
 description: A Helm chart to deploy the trivy-operator-web-ui project.
 type: application
-version: 0.2.0
+version: 0.2.1

@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.2.1](https://github.com/trivy-operator-web-ui/helm-chart/compare/118117470c1704a1a67750467dc9a4978010f681..0.2.1) - 2026-03-23
+#### Bug Fixes
+- remove appVersion + make labels immutable - ([03153f2](https://github.com/trivy-operator-web-ui/helm-chart/commit/03153f261e986c1cf69da2ffbe2ee124e13e2be6)) - ABWassim
+- default values - ([1181174](https://github.com/trivy-operator-web-ui/helm-chart/commit/118117470c1704a1a67750467dc9a4978010f681)) - ABWassim
+
+- - -
+
 ## [0.2.0](https://github.com/trivy-operator-web-ui/helm-chart/compare/0dcf960ae77114fed6a9ddabda57384f31439d57..0.2.0) - 2026-03-23
 #### Features
 - support for httproute, ingress and nodeport - ([0dcf960](https://github.com/trivy-operator-web-ui/helm-chart/commit/0dcf960ae77114fed6a9ddabda57384f31439d57)) - ABWassim
