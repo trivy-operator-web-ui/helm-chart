@@ -1,11 +1,12 @@
 pre_bump_hooks = [
     "yq '.version |= \"{{version}}\"' Chart.yaml > Chart.tmp.yaml && mv Chart.tmp.yaml Chart.yaml",
+    "helm package .",
+    "helm push trivy-operator-web-ui-{{version}}.tgz oci://ghcr.io/trivy-operator-web-ui/chart",
+    "crane cp ghcr.io/trivy-operator-web-ui/chart/trivy-operator-web-ui:{{version}} ghcr.io/trivy-operator-web-ui/chart:{{version}}"
 ]
 
 post_bump_hooks = [
-    "git push --tags origin main",
-    "helm package .",
-    "helm push trivy-operator-web-ui-{{version}}.tgz oci://ghcr.io/trivy-operator-web-ui/chart"
+    "git push --tags origin main"
 ]
 
 [changelog]
