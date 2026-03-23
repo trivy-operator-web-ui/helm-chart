@@ -1,6 +1,6 @@
 common:
   ingress:
-    enabled: true
+    enabled: false
     className: ""
     annotations: {}
     hosts: []
@@ -21,9 +21,9 @@ common:
 
 operator:
   image:
-    repository: ""
+    repository: "ghcr.io/trivy-operator-web-ui/operator"
     pullPolicy: IfNotPresent
-    tag: ""
+    tag: "0.1.1"
 
   serviceAccount:
     automount: true
@@ -86,9 +86,9 @@ operator:
 
 frontend:
   image:
-    repository: ""
+    repository: "ghcr.io/trivy-operator-web-ui/frontend"
     pullPolicy: IfNotPresent
-    tag: ""
+    tag: "0.1.2"
 
   replicaCount: 1
 
@@ -122,6 +122,13 @@ frontend:
   service:
     type: ClusterIP
     port: 8080
+
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    runAsNonRoot: true
+    runAsUser: 101
 
   httpRoute:
     filters: []

@@ -73,6 +73,12 @@ should create configmap and volume inside frontend:
                   memory: 100Mi
                 requests:
                   cpu: 10m
+              securityContext:
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 101
               volumeMounts:
                 - mountPath: /usr/share/nginx/html/assets/config.json
                   name: config-volume

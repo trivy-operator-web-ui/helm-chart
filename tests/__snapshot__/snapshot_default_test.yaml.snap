@@ -172,6 +172,12 @@ manifest should match snapshot:
                   memory: 100Mi
                 requests:
                   cpu: 10m
+              securityContext:
+                capabilities:
+                  drop:
+                    - ALL
+                runAsNonRoot: true
+                runAsUser: 101
           nodeSelector:
             disktype: ssdFrontend
           serviceAccountName: trivy-operator-web-ui-frontend

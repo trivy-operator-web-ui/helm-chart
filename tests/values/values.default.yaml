@@ -161,6 +161,13 @@ frontend:
     type: ClusterIP
     port: 8080
 
+  securityContext:
+    capabilities:
+      drop:
+      - ALL
+    runAsNonRoot: true
+    runAsUser: 101
+
   httpRoute:
     filters:
       - type: RequestHeaderModifier
