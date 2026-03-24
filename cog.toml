@@ -1,5 +1,6 @@
 pre_bump_hooks = [
     "yq '.version |= \"{{version}}\"' Chart.yaml > Chart.tmp.yaml && mv Chart.tmp.yaml Chart.yaml",
+    "sed -i 's#chart:{{latest}}#chart:{{version}}#g' README.md",
     "helm package .",
     "helm push trivy-operator-web-ui-{{version}}.tgz oci://ghcr.io/trivy-operator-web-ui/chart",
     "crane cp ghcr.io/trivy-operator-web-ui/chart/trivy-operator-web-ui:{{version}} ghcr.io/trivy-operator-web-ui/chart:{{version}}"
