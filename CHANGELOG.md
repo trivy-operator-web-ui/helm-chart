@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.4.0](https://github.com/trivy-operator-web-ui/helm-chart/compare/17ca14fa52fc7a6b6183bd5b3cbcee8c43fec564..0.4.0) - 2026-03-25
+#### Features
+- bump operator and frontend - ([48a3cff](https://github.com/trivy-operator-web-ui/helm-chart/commit/48a3cffdbba954630a094e9af42c7ea41e1cc210)) - ABWassim
+#### Continuous Integration
+- commit check - ([17ca14f](https://github.com/trivy-operator-web-ui/helm-chart/commit/17ca14fa52fc7a6b6183bd5b3cbcee8c43fec564)) - ABWassim
+
+- - -
+
 ## [0.3.0](https://github.com/trivy-operator-web-ui/helm-chart/compare/51f7a12d8355d343c5f10ce6f24fb24dff108557..0.3.0) - 2026-03-25
 #### Features
 - ![BREAKING](https://img.shields.io/badge/BREAKING-red) rename username and password env vars - ([ea6e447](https://github.com/trivy-operator-web-ui/helm-chart/commit/ea6e447c827127a7a53ac061591982c79f592f65)) - ABWassim
