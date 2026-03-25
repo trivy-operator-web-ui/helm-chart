@@ -14,7 +14,7 @@ helm install \
   -n trivy-operator-web-ui \
   --create-namespace \
   trivy-operator-web-ui \
-  oci://ghcr.io/trivy-operator-web-ui/chart:0.2.2
+  oci://ghcr.io/trivy-operator-web-ui/chart:0.3.0
 ```
 
 # 2. Cluster Role

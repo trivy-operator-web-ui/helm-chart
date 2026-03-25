@@ -2,6 +2,16 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.3.0](https://github.com/trivy-operator-web-ui/helm-chart/compare/51f7a12d8355d343c5f10ce6f24fb24dff108557..0.3.0) - 2026-03-25
+#### Features
+- ![BREAKING](https://img.shields.io/badge/BREAKING-red) rename username and password env vars - ([ea6e447](https://github.com/trivy-operator-web-ui/helm-chart/commit/ea6e447c827127a7a53ac061591982c79f592f65)) - ABWassim
+#### Bug Fixes
+- missing labels on some ressources - ([51f7a12](https://github.com/trivy-operator-web-ui/helm-chart/commit/51f7a12d8355d343c5f10ce6f24fb24dff108557)) - ABWassim
+#### Documentation
+- update - ([68a216b](https://github.com/trivy-operator-web-ui/helm-chart/commit/68a216bae6385128d838bf9824edac72bbe37439)) - ABWassim
+
+- - -
+
 ## [0.2.2](https://github.com/trivy-operator-web-ui/helm-chart/compare/9a6b844203090d6fedafef0755d259cd45bfca0a..0.2.2) - 2026-03-24
 #### Bug Fixes
 - ignore CI and test files - ([9a6b844](https://github.com/trivy-operator-web-ui/helm-chart/commit/9a6b844203090d6fedafef0755d259cd45bfca0a)) - ABWassim
