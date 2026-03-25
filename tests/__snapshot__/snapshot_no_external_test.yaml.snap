@@ -8,6 +8,13 @@ should create configmap and volume inside frontend:
         }
     kind: ConfigMap
     metadata:
+      labels:
+        app.kubernetes.io/component: frontend
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: x.y.z
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-frontend
   2: |
     apiVersion: apps/v1
@@ -138,6 +145,13 @@ should create configmap and volume inside frontend:
     apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRole
     metadata:
+      labels:
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: x.y.z
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-operator
     rules:
       - apiGroups:
@@ -155,6 +169,13 @@ should create configmap and volume inside frontend:
       RUST_LOG: error
     kind: ConfigMap
     metadata:
+      labels:
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: x.y.z
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-operator-env
   7: |
     apiVersion: apps/v1
@@ -180,8 +201,8 @@ should create configmap and volume inside frontend:
         metadata:
           annotations:
             annotations.pod.operator: "true"
-            checksum/config: 410bbfd58acbf1c15517ccd8b9978907cf97026fdbeea9d14dc80dd880f22fd3
-            checksum/secret: 85261964a59152c1612cb547acf94d6d8876cefd3e9d2c7a483bfde97eb6ddab
+            checksum/config: 024b24e125158b71e8ea29bedd2cf4a62764b75b2b4c5c973a4c442c347c7ad9
+            checksum/secret: ff3737cf121aeed8365fcb315caf1261419bf3a97b618108a895736ae40d230d
           labels:
             app.kubernetes.io/component: operator
             app.kubernetes.io/instance: RELEASE-NAME
@@ -246,6 +267,13 @@ should create configmap and volume inside frontend:
     apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRoleBinding
     metadata:
+      labels:
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: x.y.z
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-operator
     roleRef:
       apiGroup: rbac.authorization.k8s.io
@@ -262,6 +290,13 @@ should create configmap and volume inside frontend:
       PORTAL_USERNAME: dXNlcm5hbWU=
     kind: Secret
     metadata:
+      labels:
+        app.kubernetes.io/component: operator
+        app.kubernetes.io/instance: RELEASE-NAME
+        app.kubernetes.io/managed-by: Helm
+        app.kubernetes.io/name: trivy-operator-web-ui
+        app.kubernetes.io/version: x.y.z
+        helm.sh/chart: trivy-operator-web-ui
       name: trivy-operator-web-ui-operator-env
   10: |
     apiVersion: v1
