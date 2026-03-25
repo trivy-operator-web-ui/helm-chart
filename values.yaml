@@ -40,11 +40,10 @@ operator:
     limits:
       memory: 100Mi
 
-  portal:
-    # -- Username for authentication. The Same on to use on the Frontend login Page.
-    username: ""
-    # -- Password for authentication. The Same on to use on the Frontend login Page.
-    password: ""
+  # -- Username for authentication. The same one to use on the frontend login page.
+  username: ""
+  # -- Password for authentication. The same one to use on the frontend login page.
+  password: ""
 
   log:
     # -- Log Level for the rust application. Must be one of `debug`, `info`, `warn`, `error`
