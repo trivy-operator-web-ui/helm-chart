@@ -370,8 +370,8 @@ manifest should match snapshot:
   10: |
     apiVersion: v1
     data:
-      PORTAL_PASSWORD: cGFzc3dvcmQ=
-      PORTAL_USERNAME: dXNlcm5hbWU=
+      PASSWORD: cGFzc3dvcmQ=
+      USERNAME: dXNlcm5hbWU=
     kind: Secret
     metadata:
       labels:

@@ -39,9 +39,8 @@ operator:
     limits:
       memory: 100Mi
 
-  portal:
-    username: "username"
-    password: "password"
+  username: "username"
+  password: "password"
 
   log:
     level: "error"
