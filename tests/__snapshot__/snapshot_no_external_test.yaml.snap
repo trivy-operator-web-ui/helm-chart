@@ -159,6 +159,7 @@ should create configmap and volume inside frontend:
         resources:
           - vulnerabilityreports
           - sbomreports
+          - exposedsecretreports
         verbs:
           - get
           - watch

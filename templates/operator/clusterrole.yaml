@@ -6,5 +6,5 @@ metadata:
     {{- include "trivy-operator-web-ui-operator.labels" . | nindent 4 }}
 rules:
   - apiGroups: ["aquasecurity.github.io"]
-    resources: ["vulnerabilityreports", "sbomreports"]
+    resources: ["vulnerabilityreports", "sbomreports", "exposedsecretreports"]
     verbs: ["get", "watch", "list"]

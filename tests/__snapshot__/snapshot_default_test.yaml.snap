@@ -243,6 +243,7 @@ manifest should match snapshot:
         resources:
           - vulnerabilityreports
           - sbomreports
+          - exposedsecretreports
         verbs:
           - get
           - watch
