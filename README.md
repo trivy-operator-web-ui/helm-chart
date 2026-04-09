@@ -23,7 +23,7 @@ In order to collect your reports, the Operator must have the following permissio
 ```yaml
 rules:
   - apiGroups: ["aquasecurity.github.io"]
-    resources: ["vulnerabilityreports", "sbomreports"] # more to come
+    resources: ["vulnerabilityreports", "sbomreports", "exposedsecretreports"] # More to come
     verbs: ["get", "watch", "list"]
 ```
 
