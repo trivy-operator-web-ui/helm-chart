@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.7.0](https://github.com/trivy-operator-web-ui/helm-chart/compare/15d2bb01c45903a7b6668bd703ee8ef732b96dae..0.7.0) - 2026-04-09
+#### Features
+- update components - ([15d2bb0](https://github.com/trivy-operator-web-ui/helm-chart/commit/15d2bb01c45903a7b6668bd703ee8ef732b96dae)) - cn
+
+- - -
+
 ## [0.6.0](https://github.com/trivy-operator-web-ui/helm-chart/compare/b852dde09183d07abc868261a76f766503ee356d..0.6.0) - 2026-04-09
 #### Features
 - ![BREAKING](https://img.shields.io/badge/BREAKING-red) update operator - ([b852dde](https://github.com/trivy-operator-web-ui/helm-chart/commit/b852dde09183d07abc868261a76f766503ee356d)) - cn
