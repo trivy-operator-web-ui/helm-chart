@@ -203,7 +203,7 @@ should create configmap and volume inside frontend:
           annotations:
             annotations.pod.operator: "true"
             checksum/config: 024b24e125158b71e8ea29bedd2cf4a62764b75b2b4c5c973a4c442c347c7ad9
-            checksum/secret: ff3737cf121aeed8365fcb315caf1261419bf3a97b618108a895736ae40d230d
+            checksum/secret: e4dbd3e50de9ae79655530a34880f92ce2031f756396485bc472e7aef2590d92
           labels:
             app.kubernetes.io/component: operator
             app.kubernetes.io/instance: RELEASE-NAME
@@ -287,8 +287,8 @@ should create configmap and volume inside frontend:
   9: |
     apiVersion: v1
     data:
-      PASSWORD: cGFzc3dvcmQ=
-      USERNAME: dXNlcm5hbWU=
+      API_PASSWORD: cGFzc3dvcmQ=
+      API_USERNAME: dXNlcm5hbWU=
     kind: Secret
     metadata:
       labels:
