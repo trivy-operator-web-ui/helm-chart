@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file. See [conventional commits](https://www.conventionalcommits.org/) for commit guidelines.
 
 - - -
+## [0.7.1](https://github.com/trivy-operator-web-ui/helm-chart/compare/331489474be4de02fa6cf9d94cdec3c6094a08dd..0.7.1) - 2026-05-11
+#### Bug Fixes
+- bump frontend - ([28171b7](https://github.com/trivy-operator-web-ui/helm-chart/commit/28171b7b7b4e8cc15faea619a6be5f1fd9960078)) - ABWassim
+#### Documentation
+- typos and improvements - ([433226b](https://github.com/trivy-operator-web-ui/helm-chart/commit/433226ba5adee8e501f3ad8c35b932844709a7fd)) - ABWassim
+- update - ([3314894](https://github.com/trivy-operator-web-ui/helm-chart/commit/331489474be4de02fa6cf9d94cdec3c6094a08dd)) - cn
+
+- - -
+
 ## [0.7.0](https://github.com/trivy-operator-web-ui/helm-chart/compare/15d2bb01c45903a7b6668bd703ee8ef732b96dae..0.7.0) - 2026-04-09
 #### Features
 - update components - ([15d2bb0](https://github.com/trivy-operator-web-ui/helm-chart/commit/15d2bb01c45903a7b6668bd703ee8ef732b96dae)) - cn
