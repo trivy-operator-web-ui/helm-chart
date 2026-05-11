@@ -4,7 +4,7 @@ This chart deploys the Trivy Operator Web UI project inside your cluster. It con
 - An Operator that collects your reports' data and serve them through an API
 - A Frontend that displays the data.
 
-Both components live in seperate Pods.
+Both components live in separate Pods.
 
 # 1. Deploy
 
@@ -29,15 +29,15 @@ rules:
 
 This is already handled by the Chart, but it's worth precising.
 
-# 3. Exposure and URLs
+# 3. Access through URLs
 
-By default, a common Ingress and/or HttpRoute object is shared by both components. You configure a list of domains, then the Frontend is served using the **empty route**, and the Frontend calls the Operator using the `/api` route. That routing is already configured inside the [Ingress](./templates/common/ingress.yaml) and [HttpRoute](./templates/common/httproute.yaml).
+By default, a common `Ingress` and/or `HttpRoute` object is shared by both components. You configure a list of domains, and for each domain, the Frontend is served using the **empty route**, and the Frontend calls the Operator using the `/api` route. That routing is already configured inside the [Ingress](./templates/common/ingress.yaml) and [HttpRoute](./templates/common/httproute.yaml) ressources.
 
-**However**, if you need to manually configure a different domain for the Operator (exposed through NodePort or whatever), you can **disable** the Ingress and HttpRoute objects **AND** use the `.operator.url` value. This value will be injected in the Frontend container which will then call that specific URL for requests instead of the same root URL.
+**However**, if for some reason you need to have a different domain for the Operator, you can **disable** the Ingress and HttpRoute objects **AND** use the `.operator.url` value. This value will be injected in the Frontend container which will then call that specific domain for requests instead of the same root domain. Keep in mind that using that strategy, you will likely have to configure CORS rules on the server serving the Operator's domain.
 
 # 4. TLS
 
-This application uses [Secure cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies#block_access_to_your_cookies) to store the JWT for authentication, which means that this application cannot be used if you don't have TLS endpoints for this application (except if `localhost` is used).
+This application uses [Secure cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/Cookies#block_access_to_your_cookies) to store the JWT for authentication, which means that it cannot be used if you don't have TLS termination(s) for your domain(s) (except if `localhost` is used).
 
 # 5. Values
 
