@@ -98,7 +98,7 @@ frontend:
   image:
     repository: "ghcr.io/trivy-operator-web-ui/frontend"
     pullPolicy: IfNotPresent
-    tag: "0.2.0"
+    tag: "0.2.1"
 
   replicaCount: 1
 
